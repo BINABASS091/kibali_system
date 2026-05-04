@@ -1,340 +1,100 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ permit.permit_number }} - Kibali cha Ujenzi</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px;
-            background: white;
-            border: 3px solid #DAA520;
-            border-radius: 5px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #DAA520;
-        }
-        
-        .header h1 {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            font-size: 12px;
-            margin: 5px 0;
-        }
-        
-        .title {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            margin: 30px 0;
-            text-decoration: underline;
-        }
-        
-        .permit-number {
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        
-        .section {
-            margin: 25px 0;
-        }
-        
-        .section-title {
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #ccc;
-        }
-        
-        .row {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-        
-        .col {
-            flex: 1;
-        }
-        
-        .col-half {
-            flex: 0 0 48%;
-        }
-        
-        .field {
-            margin-bottom: 12px;
-        }
-        
-        .field-label {
-            font-size: 11px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 3px;
-        }
-        
-        .field-value {
-            font-size: 12px;
-            padding: 8px;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            min-height: 20px;
-        }
-        
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .boundaries {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 15px 0;
-        }
-        
-        .boundary-box {
-            border: 1px solid #999;
-            padding: 10px;
-            text-align: center;
-        }
-        
-        .boundary-label {
-            font-weight: bold;
-            font-size: 11px;
-            margin-bottom: 5px;
-        }
-        
-        .boundary-value {
-            font-size: 12px;
-            padding: 5px;
-            background: #f0f0f0;
-            min-height: 18px;
-        }
-        
-        .paragraph-text {
-            font-size: 11px;
-            line-height: 1.7;
-            text-align: justify;
-            margin: 20px 0;
-            padding: 15px;
-            background: #fafafa;
-            border-left: 3px solid #DAA520;
-        }
-        
-        .signature-section {
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .signature-block {
-            text-align: center;
-            flex: 0 0 30%;
-        }
-        
-        .signature-line {
-            border-top: 1px solid #333;
-            margin: 50px 0 5px 0;
-            min-height: 50px;
-        }
-        
-        .signature-label {
-            font-size: 10px;
-            font-weight: bold;
-        }
-        
-        .date-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 15px 0;
-        }
-        
-        .date-block {
-            padding: 10px;
-            border: 1px solid #ddd;
-            background: #f9f9f9;
-        }
-        
-        .date-label {
-            font-size: 10px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .date-value {
-            font-size: 12px;
-            padding: 8px;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #DAA520;
-            font-size: 10px;
-            color: #666;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>{{ permit.permit_number }} - Kibali cha Ujenzi</title>
+  <style>
+    @page {
+      size: 127mm 178mm;
+      margin: 0;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
+    }
+
+    .page {
+      position: relative;
+      width: 127mm;
+      height: 178mm;
+      overflow: hidden;
+      background-color: #fff;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      {% if background_url %}
+      background-image: url("{{ background_url }}");
+      {% endif %}
+    }
+
+    .field {
+      position: absolute;
+      z-index: 2;
+      font-size: 10.5pt;
+      line-height: 1;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .field span {
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>SEREKALI YA MAPINDUZI YA ZANZIBAR</h1>
-            <p>HALMASHAURI YA NGAZI YA MANISPAA</p>
-            <p>Kampuni ya Mazamili na Ujenzi</p>
-            <p>Tel: +255 777 123456 | Email: info@kibali.go.tz</p>
-        </div>
-        
-        <!-- Title -->
-        <div class="title">
-            KIBALI CHA UJENZI
-        </div>
-        
-        <!-- Permit Number -->
-        <div class="permit-number">
-            NAMBA: {{ permit.permit_number }}<br>
-            TAREHE: {{ permit.tarehe_kutolewa|date:"d/m/Y" }}
-        </div>
-        
-        <!-- Section 1: Applicant Information -->
-        <div class="section">
-            <div class="section-title">HABARI ZA MGOMBEZI</div>
-            <div class="field">
-                <div class="field-label">Jina la Mgombezi / Asasi (Name of Applicant / Institution)</div>
-                <div class="field-value">{{ permit.jina }}</div>
-            </div>
-        </div>
-        
-        <!-- Section 2: Construction Details -->
-        <div class="section">
-            <div class="section-title">MAELEZO YA JENGO (CONSTRUCTION DETAILS)</div>
-            
-            <div class="grid-2">
-                <div class="field">
-                    <div class="field-label">Aina ya Ujenzi (Type of Construction)</div>
-                    <div class="field-value">{{ permit.get_aina_display }}</div>
-                </div>
-                <div class="field">
-                    <div class="field-label">Mahali (Location)</div>
-                    <div class="field-value">{{ permit.pahala }}</div>
-                </div>
-            </div>
-            
-            <div class="field">
-                <div class="field-label">Shehia / Kata (Ward / Division)</div>
-                <div class="field-value">{{ permit.shehia }}</div>
-            </div>
-        </div>
-        
-        <!-- Section 3: Land Boundaries -->
-        <div class="section">
-            <div class="section-title">MIPAKA YA ARDHI (LAND BOUNDARIES)</div>
-            <div class="boundaries">
-                <div class="boundary-box">
-                    <div class="boundary-label">KASKAZINI (NORTH)</div>
-                    <div class="boundary-value">{{ permit.kaskazini }}</div>
-                </div>
-                <div class="boundary-box">
-                    <div class="boundary-label">MASHARIKI (EAST)</div>
-                    <div class="boundary-value">{{ permit.mashariki }}</div>
-                </div>
-                <div class="boundary-box">
-                    <div class="boundary-label">MAGHARIBI (WEST)</div>
-                    <div class="boundary-value">{{ permit.magharibi }}</div>
-                </div>
-                <div class="boundary-box">
-                    <div class="boundary-label">KUSINI (SOUTH)</div>
-                    <div class="boundary-value">{{ permit.kusini }}</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Section 4: Measurements -->
-        <div class="section">
-            <div class="section-title">VIPIMO VYA JENGO (MEASUREMENTS)</div>
-            <div class="grid-2">
-                <div class="field">
-                    <div class="field-label">Upana (Width) - Mita</div>
-                    <div class="field-value">{{ permit.upana }} m</div>
-                </div>
-                <div class="field">
-                    <div class="field-label">Urefu (Height/Length) - Mita</div>
-                    <div class="field-value">{{ permit.urefu }} m</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Section 5: Dates -->
-        <div class="section">
-            <div class="section-title">TAREHE (DATES)</div>
-            <div class="date-info">
-                <div class="date-block">
-                    <div class="date-label">Tarehe ya Kutolewa (Issue Date)</div>
-                    <div class="date-value">{{ permit.tarehe_kutolewa|date:"d/m/Y" }}</div>
-                </div>
-                <div class="date-block">
-                    <div class="date-label">Tarehe ya Mwisho (Expiry Date)</div>
-                    <div class="date-value">{{ permit.tarehe_mwisho|date:"d/m/Y" }}</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Paragraph Text -->
-        <div class="paragraph-text">
-            Hii ni kibali rasmi kinachoshauri kuwa mtoa ombi anaoitajwa hapo juu ana ruhusa ya kujenga jengo linalofaa mahali palipopelekwa hapo juu kwa mujibu wa sheria za Zanzibar zinazosimamia ujenzi. Kibali hiki kitakuwa na uthabiti wa miezi mitatu tu tangu tarehe iliyofafanuliwa. Kigezo katika kibali hiki lazima kiangatiwe ipasavyo na mtoa ombi.
-        </div>
-        
-        <!-- Signature Section -->
-        <div class="signature-section">
-            <div class="signature-block">
-                <div class="signature-line"></div>
-                <div class="signature-label">Mgeni Muendeshaji<br>Mkurgenzi wa Idara</div>
-            </div>
-            <div class="signature-block">
-                <div class="signature-line"></div>
-                <div class="signature-label">Mwenyekiti wa Halmashauri</div>
-            </div>
-            <div class="signature-block">
-                <div class="signature-line"></div>
-                <div class="signature-label">Tarehe / Date</div>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            <p>Hati hii iliyokamatwa kwa mfumo wa Kibali cha Ujenzi - {{ permit.tarehe_kutolewa|date:"Y" }}</p>
-        </div>
+  <div class="page">
+    <div class="field" style="top: {{ field_positions.applicant.top }}; left: {{ field_positions.applicant.left }};">
+      {{ permit.jina }}
     </div>
+
+    <div class="field" style="top: {{ field_positions.construction.top }}; left: {{ field_positions.construction.left }};">
+      {{ permit.get_aina_display }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.location.top }}; left: {{ field_positions.location.left }};">
+      {{ permit.pahala }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.shehia.top }}; left: {{ field_positions.shehia.left }};">
+      {{ permit.shehia }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.kaskazini.top }}; left: {{ field_positions.kaskazini.left }};">
+      {{ permit.kaskazini }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.mashariki.top }}; left: {{ field_positions.mashariki.left }};">
+      {{ permit.mashariki }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.magharibi.top }}; left: {{ field_positions.magharibi.left }};">
+      {{ permit.magharibi }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.kusini.top }}; left: {{ field_positions.kusini.left }};">
+      {{ permit.kusini }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.upana.top }}; left: {{ field_positions.upana.left }};">
+      {{ permit.upana }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.urefu.top }}; left: {{ field_positions.urefu.left }};">
+      {{ permit.urefu }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.tarehe_kutolewa.top }}; left: {{ field_positions.tarehe_kutolewa.left }};">
+      {{ permit.tarehe_kutolewa|date:"d/m/Y" }}
+    </div>
+
+    <div class="field" style="top: {{ field_positions.tarehe_mwisho.top }}; left: {{ field_positions.tarehe_mwisho.left }};">
+      {{ permit.tarehe_mwisho|date:"d/m/Y" }}
+    </div>
+  </div>
 </body>
 </html>

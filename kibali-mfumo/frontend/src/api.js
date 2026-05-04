@@ -41,6 +41,8 @@ export const permitAPI = {
     apiClient.post('/permits/create/', permitData),
   list: () => 
     apiClient.get('/permits/'),
+  verify: (permitNumber) =>
+    apiClient.get(`/permits/verify/${permitNumber}/`),
   getDetail: (permitId) => 
     apiClient.get(`/permits/${permitId}/`),
   download: (permitId) => 

@@ -8,6 +8,7 @@ function CreatePermit({ user, onLogout }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [createdPermit, setCreatedPermit] = useState(null);
 
   const [formData, setFormData] = useState({
     jina: '',
@@ -47,16 +48,52 @@ function CreatePermit({ user, onLogout }) {
 
     try {
       const response = await permitAPI.create(formData);
+      setCreatedPermit(response.data);
       setSuccess(true);
-      
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
+
+      if (response.data?.id) {
+        const pdfResponse = await permitAPI.download(response.data.id);
+        const blob = new Blob([pdfResponse.data], { type: 'application/pdf' });
+        const pdfUrl = window.URL.createObjectURL(blob);
+        window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+      }
     } catch (err) {
       setError('Hitilafu katika kuunda kibali: ' + (err.response?.data?.detail || 'Jaribu tena'));
       console.error('Error:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDownloadPdf = async () => {
+    if (!createdPermit?.id) return;
+
+    try {
+      const response = await permitAPI.download(createdPermit.id);
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${createdPermit.permit_number || 'kibali'}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      setError('Imeshindikana kudownload PDF. Jaribu tena.');
+      console.error('Download error:', err);
+    }
+  };
+
+  const handleOpenPdf = async () => {
+    if (!createdPermit?.id) return;
+
+    try {
+      const response = await permitAPI.download(createdPermit.id);
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      setError('Imeshindikana kufungua PDF. Jaribu tena.');
+      console.error('Open PDF error:', err);
     }
   };
 
@@ -81,7 +118,19 @@ function CreatePermit({ user, onLogout }) {
         <div className="form-container">
           {success && (
             <div className="success-message">
-              Kibali kimeuundwa kwa ufanisi! Ukielekezwa kwa dashibodi...
+              Kibali kimeundwa kwa ufanisi.
+              {createdPermit?.permit_number ? ` Namba: ${createdPermit.permit_number}` : ''}
+              <div className="form-actions" style={{ marginTop: '12px' }}>
+                <button type="button" className="btn btn-primary" onClick={handleOpenPdf}>
+                  Fungua PDF
+                </button>
+                <button type="button" className="btn btn-secondary" onClick={handleDownloadPdf}>
+                  Download PDF
+                </button>
+                <button type="button" className="btn btn-secondary" onClick={() => navigate('/dashboard')}>
+                  Rudi Dashibodi
+                </button>
+              </div>
             </div>
           )}
 
