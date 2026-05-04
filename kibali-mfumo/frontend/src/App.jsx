@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import CreatePermit from './pages/CreatePermit';
+import VerifyPermit from './pages/VerifyPermit';
 import './App.css';
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
             <Navigate to="/login" />
           } 
         />
+        <Route path="/verify/:permitNumber" element={<VerifyPermit />} />
         <Route path="/" element={<Navigate to="/dashboard" />} />
       </Routes>
     </Router>

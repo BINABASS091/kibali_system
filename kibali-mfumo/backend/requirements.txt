@@ -6,4 +6,6 @@ PyJWT==2.12.1
 psycopg[binary]==3.2.13
 python-decouple==3.8
 WeasyPrint==59.0
+pydyf==0.8.0
 Pillow==11.0.0
+qrcode==7.4.2
